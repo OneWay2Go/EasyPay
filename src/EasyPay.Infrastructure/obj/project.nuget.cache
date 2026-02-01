@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "9ig5PmoRxkA=",
+  "success": true,
+  "projectFilePath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "/home/uchqunov/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.22/microsoft.aspnetcore.app.ref.8.0.22.nupkg.sha512"
+  ],
+  "logs": []
+}

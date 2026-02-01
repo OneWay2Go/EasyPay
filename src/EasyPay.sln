@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPay.Web", "EasyPay.Web\EasyPay.Web.csproj", "{C1F20B95-8CF3-4492-A0AB-729785395D0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPay.Core", "EasyPay.Core\EasyPay.Core.csproj", "{6F35B8FB-25F4-426A-9231-B2CE61881708}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPay.Application", "EasyPay.Application\EasyPay.Application.csproj", "{DE71202E-B386-4B8E-9A23-BAC6267CDEEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPay.Infrastructure", "EasyPay.Infrastructure\EasyPay.Infrastructure.csproj", "{9FF48319-1830-459D-B0B9-0E30B77C35E0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1F20B95-8CF3-4492-A0AB-729785395D0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1F20B95-8CF3-4492-A0AB-729785395D0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1F20B95-8CF3-4492-A0AB-729785395D0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1F20B95-8CF3-4492-A0AB-729785395D0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F35B8FB-25F4-426A-9231-B2CE61881708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F35B8FB-25F4-426A-9231-B2CE61881708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F35B8FB-25F4-426A-9231-B2CE61881708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F35B8FB-25F4-426A-9231-B2CE61881708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE71202E-B386-4B8E-9A23-BAC6267CDEEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE71202E-B386-4B8E-9A23-BAC6267CDEEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE71202E-B386-4B8E-9A23-BAC6267CDEEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE71202E-B386-4B8E-9A23-BAC6267CDEEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FF48319-1830-459D-B0B9-0E30B77C35E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FF48319-1830-459D-B0B9-0E30B77C35E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FF48319-1830-459D-B0B9-0E30B77C35E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FF48319-1830-459D-B0B9-0E30B77C35E0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

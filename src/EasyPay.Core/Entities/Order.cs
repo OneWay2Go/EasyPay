@@ -6,9 +6,7 @@ public class Order
 {
     public Guid OrderId { get; set; }
     
-    // Relationships
     public Guid ProductId { get; set; }
-    public Product Product { get; set; }
     
     // Relationships
     public Guid BuyerId { get; set; }

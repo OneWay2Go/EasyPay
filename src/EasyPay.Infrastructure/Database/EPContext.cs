@@ -6,7 +6,7 @@ namespace EasyPay.Infrastructure.Database;
 public class EPContext
     : DbContext
 {
-    EPContext(DbContextOptions<EPContext> options) : base(options){}
+    public EPContext(DbContextOptions<EPContext> options) : base(options){}
     
     DbSet<User> Users { get; set; }
     DbSet<Order> Orders { get; set; }

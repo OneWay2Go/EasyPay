@@ -1,0 +1,12 @@
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/bin/Debug/net8.0/EasyPay.Core.deps.json
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/bin/Debug/net8.0/EasyPay.Core.dll
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/bin/Debug/net8.0/EasyPay.Core.pdb
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/obj/Debug/net8.0/EasyPay.Core.GeneratedMSBuildEditorConfig.editorconfig
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/obj/Debug/net8.0/EasyPay.Core.AssemblyInfoInputs.cache
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/obj/Debug/net8.0/EasyPay.Core.AssemblyInfo.cs
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/obj/Debug/net8.0/EasyPay.Core.csproj.CoreCompileInputs.cache
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/obj/Debug/net8.0/EasyPay.Core.sourcelink.json
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/obj/Debug/net8.0/EasyPay.Core.dll
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/obj/Debug/net8.0/refint/EasyPay.Core.dll
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/obj/Debug/net8.0/EasyPay.Core.pdb
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/obj/Debug/net8.0/ref/EasyPay.Core.dll

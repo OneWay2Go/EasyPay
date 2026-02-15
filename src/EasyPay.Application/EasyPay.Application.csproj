@@ -6,4 +6,15 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="DTOs\Game\" />
+      <Folder Include="DTOs\Order\" />
+      <Folder Include="DTOs\Product\" />
+      <Folder Include="DTOs\User\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EasyPay.Core\EasyPay.Core.csproj" />
+    </ItemGroup>
+
 </Project>

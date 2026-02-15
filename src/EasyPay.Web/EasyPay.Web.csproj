@@ -19,6 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\EasyPay.Application\EasyPay.Application.csproj" />
       <ProjectReference Include="..\EasyPay.Infrastructure\EasyPay.Infrastructure.csproj" />
     </ItemGroup>
 

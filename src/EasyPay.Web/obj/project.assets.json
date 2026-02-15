@@ -906,6 +906,19 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
+      "EasyPay.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "EasyPay.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/EasyPay.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EasyPay.Application.dll": {}
+        }
+      },
       "EasyPay.Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -2561,6 +2574,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "EasyPay.Application/1.0.0": {
+      "type": "project",
+      "path": "../EasyPay.Application/EasyPay.Application.csproj",
+      "msbuildProject": "../EasyPay.Application/EasyPay.Application.csproj"
+    },
     "EasyPay.Core/1.0.0": {
       "type": "project",
       "path": "../EasyPay.Core/EasyPay.Core.csproj",
@@ -2574,6 +2592,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "EasyPay.Application >= 1.0.0",
       "EasyPay.Infrastructure >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.24",
       "Swashbuckle.AspNetCore >= 6.6.2"
@@ -2604,6 +2623,9 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+            "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj": {
+              "projectPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj"
+            },
             "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {
               "projectPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj"
             }

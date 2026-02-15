@@ -113,3 +113,6 @@
 /home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Web/bin/Debug/net8.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Web/bin/Debug/net8.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
 /home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Web/bin/Debug/net8.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Web/bin/Debug/net8.0/BCrypt.Net-Next.dll
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Web/bin/Debug/net8.0/EasyPay.Application.dll
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Web/bin/Debug/net8.0/EasyPay.Application.pdb

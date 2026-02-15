@@ -11,10 +11,16 @@
       <Folder Include="DTOs\Order\" />
       <Folder Include="DTOs\Product\" />
       <Folder Include="DTOs\User\" />
+      <Folder Include="Interfaces\" />
+      <Folder Include="Services\" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\EasyPay.Core\EasyPay.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     </ItemGroup>
 
 </Project>

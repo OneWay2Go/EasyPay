@@ -15,4 +15,18 @@ public class UserController(EPContext context)
         var users = await context.Users.ToListAsync();
         return Ok(users);
     }
+
+    [HttpGet("get-by-id")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == id);
+        if (user is not null)
+        {
+            return Ok(user);
+        }
+        else
+        {
+            return NotFound("User not found");
+        }
+    }
 }

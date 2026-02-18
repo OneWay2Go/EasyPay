@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BnGf9eGedKo=",
+  "dgSpecHash": "7jcXNRTvK+s=",
   "success": true,
   "projectFilePath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Web/EasyPay.Web.csproj",
   "expectedPackageFiles": [
@@ -51,5 +51,15 @@
     "/home/uchqunov/.nuget/packages/system.threading.channels/6.0.0/system.threading.channels.6.0.0.nupkg.sha512",
     "/home/uchqunov/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.22/microsoft.aspnetcore.app.ref.8.0.22.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json.",
+      "projectPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Web/EasyPay.Web.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Web/EasyPay.Web.csproj",
+      "targetGraphs": []
+    }
+  ]
 }

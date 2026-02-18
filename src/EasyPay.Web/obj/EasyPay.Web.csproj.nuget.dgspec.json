@@ -28,6 +28,9 @@
             "projectReferences": {
               "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj": {
                 "projectPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj"
+              },
+              "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {
+                "projectPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj"
               }
             }
           }

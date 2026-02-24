@@ -1,5 +1,7 @@
+using EasyPay.Application.DTOs;
 using EasyPay.Application.DTOs.User;
 using EasyPay.Application.Interfaces;
+using EasyPay.Core.Entities;
 using EasyPay.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +20,7 @@ public class UserController(
     public async Task<IActionResult> GetAll()
     {
         var users = await context.Users.ToListAsync();
-        return Ok(users);
+        return Ok(new ApiResponse<List<User>>().Success(users));
     }
 
     [HttpGet("get-by-id")]
@@ -27,11 +29,11 @@ public class UserController(
         var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == id);
         if (user is not null)
         {
-            return Ok(user);
+            return Ok(new ApiResponse<User>().Success(user));
         }
         else
         {
-            return NotFound("User not found");
+            return NotFound(new ApiResponse<User>().Error("User not found"));
         }
     }
 
@@ -41,11 +43,11 @@ public class UserController(
         bool isAdded = await userService.AddAsync(dto);
         if (isAdded)
         {
-            return Ok("User added");
+            return Ok(new ApiResponse<string>().Success("User added"));
         }
         else
         {
-            return BadRequest("User not added, and I dont know why");
+            return BadRequest(new ApiResponse<string>().Error("User not added"));
         }
     }
 
@@ -55,11 +57,11 @@ public class UserController(
         bool isDeleted = await userService.RemoveAsync(userId);
         if (isDeleted)
         {
-            return Ok("User deleted");
+            return Ok(new ApiResponse<string>().Success("User deleted"));
         }
         else
         {
-            return BadRequest("User not deleted, and I think, I do know why");
+            return BadRequest(new ApiResponse<string>().Error("User not deleted"));
         }
     }
 
@@ -69,11 +71,11 @@ public class UserController(
         bool isUpdated = await userService.Update(dto);
         if (isUpdated)
         {
-            return Ok("User updated");
+            return Ok(new ApiResponse<string>().Success("User updated"));
         }
         else
         {
-            return BadRequest("User not updated, and I dont know why");
+            return BadRequest(new ApiResponse<string>().Error("User not updated"));
         }
     }
 }

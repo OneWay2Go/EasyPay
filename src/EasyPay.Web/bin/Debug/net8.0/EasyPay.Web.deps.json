@@ -573,7 +573,8 @@
       "EasyPay.Application/1.0.0": {
         "dependencies": {
           "BCrypt.Net-Next": "4.0.3",
-          "EasyPay.Core": "1.0.0"
+          "EasyPay.Core": "1.0.0",
+          "EasyPay.Infrastructure": "1.0.0"
         },
         "runtime": {
           "EasyPay.Application.dll": {}

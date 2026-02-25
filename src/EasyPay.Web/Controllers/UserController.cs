@@ -38,7 +38,7 @@ public class UserController(
     }
 
     [HttpPost("add")]
-    public async Task<IActionResult> Add([FromBody] UserRequestDto dto)
+    public async Task<IActionResult> Add([FromBody] UserAddRequestDto dto)
     {
         bool isAdded = await userService.AddAsync(dto);
         if (isAdded)
@@ -66,16 +66,16 @@ public class UserController(
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> Update([FromBody] UserRequestDto dto)
+    public async Task<IActionResult> UpdateEmail([FromBody] UserEmailUpdateDto dto)
     {
-        bool isUpdated = await userService.Update(dto);
+        bool isUpdated = await userService.UpdateEmailAsync(dto);
         if (isUpdated)
         {
-            return Ok(new ApiResponse<string>().Success("User updated"));
+            return Ok(new ApiResponse<string>().Success("User's email updated"));
         }
         else
         {
-            return BadRequest(new ApiResponse<string>().Error("User not updated"));
+            return BadRequest(new ApiResponse<string>().Error("User's email not updated"));
         }
     }
 }

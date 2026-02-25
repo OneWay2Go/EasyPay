@@ -4,7 +4,7 @@ namespace EasyPay.Application.Interfaces;
 
 public interface IUserService
 {
-    Task<bool> AddAsync(UserRequestDto dto);
+    Task<bool> AddAsync(UserAddRequestDto dto);
     Task<bool> RemoveAsync(Guid userId);
-    Task<bool> Update(UserRequestDto dto);
+    Task<bool> UpdateEmailAsync(UserEmailUpdateDto dto);
 }

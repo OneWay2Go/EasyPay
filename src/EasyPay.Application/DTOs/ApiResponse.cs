@@ -2,11 +2,11 @@ namespace EasyPay.Application.DTOs;
 
 public class ApiResponse<T>
 {
-    private bool IsError { get; set; } = false;
+    public bool IsError { get; set; } = false;
     
-    private string ErrorMessage { get; set; } = string.Empty;
+    public string ErrorMessage { get; set; } = string.Empty;
     
-    private T? Data { get; set; }
+    public T Data { get; set; }
 
     public ApiResponse<T> Success(T data)
     {
@@ -16,12 +16,13 @@ public class ApiResponse<T>
         };
     }
 
-    public ApiResponse<T?> Error(string errorMessage)
+    public ApiResponse<T> Error(string errorMessage)
     {
-        return new ApiResponse<T?>
+        return new ApiResponse<T>
         {
             IsError = true,
             ErrorMessage = errorMessage,
+            Data = default(T)
         };
     }
 }

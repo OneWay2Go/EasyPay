@@ -1,6 +1,6 @@
 namespace EasyPay.Application.DTOs.User;
 
-public class UserRequestDto
+public class UserAddRequestDto
 {
     public string Username  { get; set; }
     

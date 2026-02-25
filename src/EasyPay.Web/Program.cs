@@ -1,3 +1,6 @@
+using EasyPay.Application.Exceptions;
+using EasyPay.Application.Interfaces;
+using EasyPay.Application.Services;
 using EasyPay.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +16,8 @@ builder.Services.AddDbContext<EPContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddServices();
 
 var app = builder.Build();
 

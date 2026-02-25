@@ -9,7 +9,7 @@ namespace EasyPay.Application.Services;
 public class UserService(EPContext context)
     : IUserService
 {
-    public async Task<bool> AddAsync(UserRequestDto dto)
+    public async Task<bool> AddAsync(UserAddRequestDto dto)
     {
         var user = new User
         {
@@ -25,7 +25,7 @@ public class UserService(EPContext context)
             
             return true;
         }
-        catch (Exception e)
+        catch
         {
             return false;
         }
@@ -43,7 +43,7 @@ public class UserService(EPContext context)
                 
                 return true;
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }
@@ -54,12 +54,13 @@ public class UserService(EPContext context)
         }
     }
 
-    public async Task<bool> Update(UserRequestDto dto)
+    public async Task<bool> UpdateEmailAsync(UserEmailUpdateDto dto)
     {
         var user = await context.Users.FirstOrDefaultAsync(u => u.Username == dto.Username);
         if (user is not null)
         {
-            user.Email = dto.Email;
+            // need to send confirmation link from frontend
+            user.Email = dto.NewEmail;
             
             context.Users.Update(user);
             await context.SaveChangesAsync();

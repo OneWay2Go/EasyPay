@@ -14,3 +14,5 @@
 /home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Application/obj/Debug/net8.0/refint/EasyPay.Application.dll
 /home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Application/obj/Debug/net8.0/EasyPay.Application.pdb
 /home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Application/obj/Debug/net8.0/ref/EasyPay.Application.dll
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Application/bin/Debug/net8.0/EasyPay.Infrastructure.dll
+/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Application/bin/Debug/net8.0/EasyPay.Infrastructure.pdb

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {}
+    "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {}
   },
   "projects": {
-    "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj": {
+    "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj",
+        "projectUniqueName": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj",
         "projectName": "EasyPay.Core",
-        "projectPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj",
+        "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj",
         "packagesPath": "/home/uchqunov/.nuget/packages/",
-        "outputPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/obj/",
+        "outputPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/uchqunov/.nuget/NuGet/NuGet.Config"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -48,29 +53,23 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.22, 8.0.22]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.122/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.418/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {
+    "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj",
+        "projectUniqueName": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj",
         "projectName": "EasyPay.Infrastructure",
-        "projectPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj",
+        "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj",
         "packagesPath": "/home/uchqunov/.nuget/packages/",
-        "outputPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/obj/",
+        "outputPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/uchqunov/.nuget/NuGet/NuGet.Config"
@@ -85,8 +84,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj": {
-                "projectPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj"
+              "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj": {
+                "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj"
               }
             }
           }
@@ -95,6 +94,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -133,18 +137,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.22, 8.0.22]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.122/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.418/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

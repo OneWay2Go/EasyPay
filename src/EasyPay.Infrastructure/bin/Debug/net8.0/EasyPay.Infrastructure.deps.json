@@ -549,7 +549,10 @@
       "System.Threading.Channels/6.0.0": {},
       "EasyPay.Core/1.0.0": {
         "runtime": {
-          "EasyPay.Core.dll": {}
+          "EasyPay.Core.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

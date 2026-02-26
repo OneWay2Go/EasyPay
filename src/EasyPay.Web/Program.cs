@@ -1,6 +1,4 @@
 using EasyPay.Application.Exceptions;
-using EasyPay.Application.Interfaces;
-using EasyPay.Application.Services;
 using EasyPay.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 

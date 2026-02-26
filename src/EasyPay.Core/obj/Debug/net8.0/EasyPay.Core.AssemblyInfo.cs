@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EasyPay.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d8f559cb50f562f7000f8c600fd3ea019a3cae5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be959f1218c9179d637bcd1c814fc02d71c9d81d")]
 [assembly: System.Reflection.AssemblyProductAttribute("EasyPay.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EasyPay.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

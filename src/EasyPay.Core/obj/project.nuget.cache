@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NvtWqPeJlOo=",
+  "dgSpecHash": "5MEUZsQSSg4=",
   "success": true,
-  "projectFilePath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj",
-  "expectedPackageFiles": [
-    "/home/uchqunov/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.22/microsoft.aspnetcore.app.ref.8.0.22.nupkg.sha512"
-  ],
+  "projectFilePath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

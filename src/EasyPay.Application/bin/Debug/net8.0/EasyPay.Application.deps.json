@@ -186,7 +186,10 @@
       },
       "EasyPay.Core/1.0.0": {
         "runtime": {
-          "EasyPay.Core.dll": {}
+          "EasyPay.Core.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "EasyPay.Infrastructure/1.0.0": {
@@ -196,7 +199,10 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.11"
         },
         "runtime": {
-          "EasyPay.Infrastructure.dll": {}
+          "EasyPay.Infrastructure.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

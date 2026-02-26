@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rlJPJyGSstI=",
+  "dgSpecHash": "WLTAqOOASTk=",
   "success": true,
-  "projectFilePath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj",
+  "projectFilePath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj",
   "expectedPackageFiles": [
     "/home/uchqunov/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/home/uchqunov/.nuget/packages/microsoft.bcl.asyncinterfaces/6.0.0/microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
@@ -42,8 +42,7 @@
     "/home/uchqunov/.nuget/packages/system.reflection.metadata/6.0.1/system.reflection.metadata.6.0.1.nupkg.sha512",
     "/home/uchqunov/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "/home/uchqunov/.nuget/packages/system.text.encoding.codepages/6.0.0/system.text.encoding.codepages.6.0.0.nupkg.sha512",
-    "/home/uchqunov/.nuget/packages/system.threading.channels/6.0.0/system.threading.channels.6.0.0.nupkg.sha512",
-    "/home/uchqunov/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.22/microsoft.aspnetcore.app.ref.8.0.22.nupkg.sha512"
+    "/home/uchqunov/.nuget/packages/system.threading.channels/6.0.0/system.threading.channels.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

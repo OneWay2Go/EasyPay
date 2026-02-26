@@ -2650,11 +2650,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Web/EasyPay.Web.csproj",
+      "projectUniqueName": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Web/EasyPay.Web.csproj",
       "projectName": "EasyPay.Web",
-      "projectPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Web/EasyPay.Web.csproj",
+      "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Web/EasyPay.Web.csproj",
       "packagesPath": "/home/uchqunov/.nuget/packages/",
-      "outputPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Web/obj/",
+      "outputPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Web/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/uchqunov/.nuget/NuGet/NuGet.Config"
@@ -2669,11 +2669,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj": {
-              "projectPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj"
+            "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj": {
+              "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj"
             },
-            "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {
-              "projectPath": "/home/uchqunov/Documents/Projects/C#/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj"
+            "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {
+              "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj"
             }
           }
         }
@@ -2682,6 +2682,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2710,12 +2715,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.22, 8.0.22]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -2724,16 +2723,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.122/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.418/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
-    }
-  ]
+  }
 }

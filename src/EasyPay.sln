@@ -1,5 +1,4 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPay.Web", "EasyPay.Web\EasyPay.Web.csproj", "{C1F20B95-8CF3-4492-A0AB-729785395D0F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPay.Core", "EasyPay.Core\EasyPay.Core.csproj", "{6F35B8FB-25F4-426A-9231-B2CE61881708}"

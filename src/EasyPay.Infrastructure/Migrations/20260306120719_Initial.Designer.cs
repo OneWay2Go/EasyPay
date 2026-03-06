@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EasyPay.Infrastructure.Migrations
 {
     [DbContext(typeof(EPContext))]
-    [Migration("20260214015405_Initial")]
+    [Migration("20260306120719_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

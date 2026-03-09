@@ -9,6 +9,41 @@ namespace EasyPay.Application.Services;
 public class UserService(EPContext context)
     : IUserService
 {
+    public async Task<List<UserGetDto>> GetAllAsync()
+    {
+        var users = await context.Users.ToListAsync();
+        List<UserGetDto> usersDto = new List<UserGetDto>();
+        foreach (var user in users)
+        {
+            usersDto.Add(new UserGetDto
+            {
+                Username = user.Username,
+                WalletBalance = user.WalletBalance
+            });
+        }
+
+        return usersDto;
+    }
+
+    public async Task<UserGetDto> GetByIdAsync(Guid userId)
+    {
+        var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+        if (user is not null)
+        {
+            UserGetDto userDto = new UserGetDto()
+            {
+                Username = user.Username,
+                WalletBalance = user.WalletBalance
+            };
+        
+            return userDto;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public async Task<bool> AddAsync(UserAddRequestDto dto)
     {
         var user = new User

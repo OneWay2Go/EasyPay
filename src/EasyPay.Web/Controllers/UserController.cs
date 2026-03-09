@@ -2,16 +2,13 @@ using EasyPay.Application.DTOs;
 using EasyPay.Application.DTOs.User;
 using EasyPay.Application.Interfaces;
 using EasyPay.Core.Entities;
-using EasyPay.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace EasyPay.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
 public class UserController(
-    EPContext context,
     IUserService userService
     )
     : ControllerBase
@@ -19,17 +16,17 @@ public class UserController(
     [HttpGet("get-all")]
     public async Task<IActionResult> GetAll()
     {
-        var users = await context.Users.ToListAsync();
-        return Ok(new ApiResponse<List<User>>().Success(users));
+        var usersDtos = await userService.GetAllAsync();
+        return Ok(new ApiResponse<List<UserGetDto>>().Success(usersDtos));
     }
 
     [HttpGet("get-by-id")]
     public async Task<IActionResult> GetById([FromQuery] Guid id)
     {
-        var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == id);
-        if (user is not null)
+        var userDto = await userService.GetByIdAsync(id);
+        if (userDto is not null)
         {
-            return Ok(new ApiResponse<User>().Success(user));
+            return Ok(new ApiResponse<UserGetDto>().Success(userDto));
         }
         else
         {
@@ -65,7 +62,7 @@ public class UserController(
         }
     }
 
-    [HttpPut("update")]
+    [HttpPut("update-email")]
     public async Task<IActionResult> UpdateEmail([FromBody] UserEmailUpdateDto dto)
     {
         bool isUpdated = await userService.UpdateEmailAsync(dto);

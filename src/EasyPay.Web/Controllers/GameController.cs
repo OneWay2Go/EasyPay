@@ -1,12 +1,14 @@
 using EasyPay.Application.DTOs;
 using EasyPay.Application.DTOs.Game;
 using EasyPay.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyPay.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(AuthenticationSchemes = "BotApiKey")]
 public class GameController(IGameService gameService) : ControllerBase
 {
     [HttpGet("get-all")]

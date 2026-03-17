@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("18676c6d-c457-47c3-9bcb-584ca8935994")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("EasyPay.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0315d39b51ac0a344e711e3ce5eea4187c5906b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+30c8fcddac08fe2ab1510f0cc9e831dd1bb74a85")]
 [assembly: System.Reflection.AssemblyProductAttribute("EasyPay.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EasyPay.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

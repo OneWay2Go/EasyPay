@@ -2,14 +2,16 @@ using EasyPay.Application.DTOs;
 using EasyPay.Application.DTOs.User;
 using EasyPay.Application.Interfaces;
 using EasyPay.Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyPay.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(AuthenticationSchemes = "BotApiKey")]
 public class UserController(
-    IUserService userService
+        IUserService userService
     )
     : ControllerBase
 {

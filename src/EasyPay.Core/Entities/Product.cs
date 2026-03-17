@@ -12,7 +12,7 @@ public class Product
     
     public int StockQuantity { get; set; }
     
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; set; } = false;
     
     // Relationships
     public Guid SellerId { get; set; }

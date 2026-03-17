@@ -9,7 +9,6 @@
     <ItemGroup>
       <Folder Include="DTOs\Game\" />
       <Folder Include="DTOs\Order\" />
-      <Folder Include="DTOs\Product\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -18,6 +18,8 @@ public class User
     
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     
+    public bool IsDeleted { get; set; } = false;
+    
     // Navigation properties
     public ICollection<Product> Products { get; set; } = new List<Product>();
     public ICollection<Order> Purchases { get; set; } = new List<Order>();

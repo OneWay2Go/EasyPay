@@ -13,17 +13,17 @@ public class UserController(
     )
     : ControllerBase
 {
-    [HttpGet("get-all")]
+    [HttpGet("get-all-active-users")]
     public async Task<IActionResult> GetAll()
     {
-        var usersDtos = await userService.GetAllAsync();
+        var usersDtos = await userService.GetAllActiveUsersAsync();
         return Ok(new ApiResponse<List<UserGetDto>>().Success(usersDtos));
     }
 
-    [HttpGet("get-by-id")]
+    [HttpGet("get-active-user-by-id")]
     public async Task<IActionResult> GetById([FromQuery] Guid id)
     {
-        var userDto = await userService.GetByIdAsync(id);
+        var userDto = await userService.GetActiveUserByIdAsync(id);
         if (userDto is not null)
         {
             return Ok(new ApiResponse<UserGetDto>().Success(userDto));
@@ -48,7 +48,7 @@ public class UserController(
         }
     }
 
-    [HttpPost("delete")]
+    [HttpPut("delete")]
     public async Task<IActionResult> Delete([FromQuery] Guid userId)
     {
         bool isDeleted = await userService.RemoveAsync(userId);
@@ -62,10 +62,10 @@ public class UserController(
         }
     }
 
-    [HttpPut("update-email")]
+    [HttpPut("update-email-of-active-user")]
     public async Task<IActionResult> UpdateEmail([FromBody] UserEmailUpdateDto dto)
     {
-        bool isUpdated = await userService.UpdateEmailAsync(dto);
+        bool isUpdated = await userService.UpdateEmailOfActiveUserAsync(dto);
         if (isUpdated)
         {
             return Ok(new ApiResponse<string>().Success("User's email updated"));

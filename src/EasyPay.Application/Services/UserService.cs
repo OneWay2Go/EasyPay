@@ -9,9 +9,10 @@ namespace EasyPay.Application.Services;
 public class UserService(EPContext context)
     : IUserService
 {
-    public async Task<List<UserGetDto>> GetAllAsync()
+    public async Task<List<UserGetDto>> GetAllActiveUsersAsync()
     {
-        var users = await context.Users.ToListAsync();
+        var users = await context.Users
+            .Where(u => u.IsDeleted == false).ToListAsync();
         List<UserGetDto> usersDto = new List<UserGetDto>();
         foreach (var user in users)
         {
@@ -25,9 +26,10 @@ public class UserService(EPContext context)
         return usersDto;
     }
 
-    public async Task<UserGetDto> GetByIdAsync(Guid userId)
+    public async Task<UserGetDto> GetActiveUserByIdAsync(Guid userId)
     {
-        var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+        var user = await context.Users
+            .FirstOrDefaultAsync(u => u.UserId == userId && u.IsDeleted == false);
         if (user is not null)
         {
             UserGetDto userDto = new UserGetDto()
@@ -52,34 +54,46 @@ public class UserService(EPContext context)
             Email = dto.Email,
             PasswordHash = BCrypt.Net.BCrypt.EnhancedHashPassword(dto.Password, 13)
         };
-
+        
+        await context.Database.BeginTransactionAsync();
         try
         {
             await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
             
+            await context.Database.CommitTransactionAsync();
+            
             return true;
         }
         catch
         {
+            await context.Database.RollbackTransactionAsync();
+            
             return false;
         }
     }
 
     public async Task<bool> RemoveAsync(Guid userId)
     {
-        var user = await context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+        var user = await context.Users
+            .FirstOrDefaultAsync(u => u.UserId == userId && u.IsDeleted == false);
         if (user is not null)
         {
+            await context.Database.BeginTransactionAsync();
             try
             {
-                context.Remove(user);
+                user.IsDeleted = true;
+                context.Update(user);
                 await context.SaveChangesAsync();
+                
+                await context.Database.CommitTransactionAsync();
                 
                 return true;
             }
             catch
             {
+                await context.Database.RollbackTransactionAsync();
+                
                 return false;
             }
         }
@@ -89,18 +103,31 @@ public class UserService(EPContext context)
         }
     }
 
-    public async Task<bool> UpdateEmailAsync(UserEmailUpdateDto dto)
+    public async Task<bool> UpdateEmailOfActiveUserAsync(UserEmailUpdateDto dto)
     {
-        var user = await context.Users.FirstOrDefaultAsync(u => u.Username == dto.Username);
+        var user = await context.Users
+            .FirstOrDefaultAsync(u => u.Username == dto.Username && u.IsDeleted == false);
         if (user is not null)
         {
-            // need to send confirmation link from frontend
-            user.Email = dto.NewEmail;
+            await context.Database.BeginTransactionAsync();
+            try
+            {
+                // need to send confirmation link from frontend
+                user.Email = dto.NewEmail;
             
-            context.Users.Update(user);
-            await context.SaveChangesAsync();
-
-            return true;
+                context.Users.Update(user);
+                await context.SaveChangesAsync();
+                
+                await context.Database.CommitTransactionAsync();
+                
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await context.Database.RollbackTransactionAsync();
+                
+                return false;
+            }
         }
         else
         {

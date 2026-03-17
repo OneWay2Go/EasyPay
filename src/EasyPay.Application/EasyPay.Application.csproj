@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <Folder Include="DTOs\Game\" />
-      <Folder Include="DTOs\Order\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -72,7 +72,7 @@ public class ProductService(EPContext context)
             
             return true;
         }
-        catch (Exception e)
+        catch
         {
             await context.Database.RollbackTransactionAsync();
             
@@ -97,7 +97,7 @@ public class ProductService(EPContext context)
                 
                 return true;
             }
-            catch (Exception e)
+            catch
             {
                 await context.Database.RollbackTransactionAsync();
                 return false;

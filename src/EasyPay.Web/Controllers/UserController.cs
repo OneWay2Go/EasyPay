@@ -58,7 +58,7 @@ public class UserController(
         }
         else
         {
-            return BadRequest(new ApiResponse<string>().Error("User not deleted"));
+            return BadRequest(new ApiResponse<string>().Error("User not deleted, or it is already deleted"));
         }
     }
 

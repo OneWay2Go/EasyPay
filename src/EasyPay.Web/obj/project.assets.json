@@ -932,7 +932,10 @@
         },
         "runtime": {
           "bin/placeholder/EasyPay.Application.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "EasyPay.Core/1.0.0": {
         "type": "project",

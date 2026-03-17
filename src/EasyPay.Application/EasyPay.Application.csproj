@@ -7,16 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DTOs\Game\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\EasyPay.Core\EasyPay.Core.csproj" />
       <ProjectReference Include="..\EasyPay.Infrastructure\EasyPay.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
 </Project>

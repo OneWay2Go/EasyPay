@@ -11,6 +11,12 @@ public static class ServiceDI
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IGameService, GameService>();
+
+        services.AddRouting(options =>
+        {
+            options.LowercaseUrls = true;
+        });
         
         return services;
     }

@@ -56,7 +56,7 @@ public class ProductController(
         }
         else
         {
-            return BadRequest(new ApiResponse<string>().Error("Product not deleted"));
+            return BadRequest(new ApiResponse<string>().Error("Product not deleted, or it is already deleted"));
         }
     }
 }

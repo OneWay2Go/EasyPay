@@ -56,7 +56,7 @@ public class OrderController(
         }
         else
         {
-            return BadRequest(new ApiResponse<string>().Success("Order not deleted"));
+            return BadRequest(new ApiResponse<string>().Success("Order not deleted, or it is already deleted"));
         }
     }
 }

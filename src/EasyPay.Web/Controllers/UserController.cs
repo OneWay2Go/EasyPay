@@ -9,7 +9,6 @@ namespace EasyPay.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(AuthenticationSchemes = "BotApiKey")]
 public class UserController(
         IUserService userService
     )

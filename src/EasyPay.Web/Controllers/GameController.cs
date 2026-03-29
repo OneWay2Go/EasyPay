@@ -8,7 +8,6 @@ namespace EasyPay.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(AuthenticationSchemes = "BotApiKey")]
 public class GameController(IGameService gameService) : ControllerBase
 {
     [HttpGet("get-all")]

@@ -20,6 +20,9 @@ public class Order
     public decimal PriceAtPurchase { get; set; }
     public int Quantity { get; set; }
     
+    public string? ReceiptFileId { get; set; }
+    public string? AdditionalInfo { get; set; }
+    
     public decimal TotalAmount => Quantity * PriceAtPurchase;
 
     public OrderStatus Status { get; set; } = OrderStatus.PendingPayment;

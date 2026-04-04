@@ -43,6 +43,9 @@ namespace EasyPay.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("AdditionalInfo")
+                        .HasColumnType("text");
+
                     b.Property<Guid>("BuyerId")
                         .HasColumnType("uuid");
 
@@ -61,6 +64,9 @@ namespace EasyPay.Infrastructure.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ReceiptFileId")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("SellerId")
                         .HasColumnType("uuid");
@@ -121,6 +127,13 @@ namespace EasyPay.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("BotState")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("BotTempData")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -137,6 +150,9 @@ namespace EasyPay.Infrastructure.Migrations
 
                     b.Property<int>("Role")
                         .HasColumnType("integer");
+
+                    b.Property<long?>("TelegramId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Username")
                         .IsRequired()

@@ -1,6 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -15,5 +18,10 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
     <PackageReference Include="Telegram.Bot" Version="22.9.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\backend\EasyPay.Core\EasyPay.Core.csproj" />
+    <ProjectReference Include="..\backend\EasyPay.Infrastructure\EasyPay.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,40 @@
+services:
+  easypay-db:
+    image: postgres:15-alpine
+    container_name: easypay-db
+    environment:
+      POSTGRES_DB: easypay_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  easypay-api:
+    build:
+      context: ./backend
+      dockerfile: EasyPay.Web/Dockerfile
+    container_name: easypay-api
+    depends_on:
+      - easypay-db
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=easypay-db;Database=easypay_db;Username=postgres;Password=postgres
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8080:8080" # Web API port
+
+  easypay-bot:
+    build:
+      context: .
+      dockerfile: TgRobuxBot/Dockerfile
+    container_name: easypay-bot
+    depends_on:
+      - easypay-db
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=easypay-db;Database=easypay_db;Username=postgres;Password=postgres
+      - BotToken=${BOT_TOKEN} # Use .env file or env var
+      - DOTNET_ENVIRONMENT=Development
+
+volumes:
+  postgres_data:

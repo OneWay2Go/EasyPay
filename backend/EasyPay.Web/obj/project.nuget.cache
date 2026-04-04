@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VfWvclEKWrI=",
+  "dgSpecHash": "j2VBpUgue4U=",
   "success": true,
-  "projectFilePath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Web/EasyPay.Web.csproj",
+  "projectFilePath": "/home/uchqunov/RiderProjects/EasyPay/backend/EasyPay.Web/EasyPay.Web.csproj",
   "expectedPackageFiles": [
     "/home/uchqunov/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/home/uchqunov/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",

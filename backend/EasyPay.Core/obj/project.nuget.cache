@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EzSbpjmVi1Q=",
+  "dgSpecHash": "3qBBlWNyk/M=",
   "success": true,
-  "projectFilePath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj",
+  "projectFilePath": "/home/uchqunov/RiderProjects/EasyPay/backend/EasyPay.Core/EasyPay.Core.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

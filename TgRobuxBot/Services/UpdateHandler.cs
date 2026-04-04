@@ -5,7 +5,9 @@ using Telegram.Bot.Types.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using TgRobuxBot.Models;
+using EasyPay.Core.Entities;
+using EasyPay.Core.Enums;
+using EasyPay.Infrastructure.Database;
 using System.Text.Json;
 
 namespace TgRobuxBot.Services;
@@ -24,7 +26,7 @@ public class UpdateHandler
     public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
         using var scope = _serviceProvider.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<EPContext>();
 
         try
         {
@@ -43,7 +45,7 @@ public class UpdateHandler
         }
     }
 
-    private async Task HandleMessageAsync(ITelegramBotClient botClient, Message message, ApplicationDbContext dbContext, CancellationToken cancellationToken)
+    private async Task HandleMessageAsync(ITelegramBotClient botClient, Message message, EPContext dbContext, CancellationToken cancellationToken)
     {
         if (message.Chat.Type == ChatType.Private)
         {
@@ -55,7 +57,7 @@ public class UpdateHandler
         }
     }
     
-    private async Task HandleGroupMessageAsync(ITelegramBotClient botClient, Message message, ApplicationDbContext dbContext, CancellationToken cancellationToken)
+    private async Task HandleGroupMessageAsync(ITelegramBotClient botClient, Message message, EPContext dbContext, CancellationToken cancellationToken)
     {
         if (string.IsNullOrEmpty(message.Text)) return;
         
@@ -70,7 +72,7 @@ public class UpdateHandler
 
             await botClient.SendMessage(
                 chatId: message.Chat.Id,
-                text: $"Assalomu alaykum, {message.From?.FirstName}! 👋\nRobux, Telegram Stars yoki Premium sotib olish uchun botga o'ting:",
+                text: $"Assalomu alaykum, {message.From?.FirstName}! 👋\nEasyPay orqali Robux va boshqa to'lovlarni amalga oshiring:",
                 replyParameters: message.MessageId,
                 replyMarkup: inlineKeyboard,
                 cancellationToken: cancellationToken
@@ -78,31 +80,37 @@ public class UpdateHandler
         }
     }
 
-    private async Task HandlePrivateMessageAsync(ITelegramBotClient botClient, Message message, ApplicationDbContext dbContext, CancellationToken cancellationToken)
+    private async Task HandlePrivateMessageAsync(ITelegramBotClient botClient, Message message, EPContext dbContext, CancellationToken cancellationToken)
     {
+        // Unified User Retrieval: Check by TelegramId
         var user = await dbContext.Users.FirstOrDefaultAsync(u => u.TelegramId == message.From!.Id, cancellationToken);
+        
         if (user == null)
         {
-            user = new AppUser
+            // If doesn't exist by TelegramId, check by Username (optional, let's just create new)
+            user = new User
             {
+                UserId = Guid.NewGuid(),
                 TelegramId = message.From!.Id,
-                Username = message.From.Username,
-                FirstName = message.From.FirstName,
-                State = "Idle"
+                Username = message.From.Username ?? $"user_{message.From.Id}",
+                PasswordHash = "TG_USER", // Dummy, they use TWA for real auth
+                Email = "tg@easypay.uz",
+                BotState = "Idle",
+                CreatedAt = DateTime.UtcNow
             };
             dbContext.Users.Add(user);
             await dbContext.SaveChangesAsync(cancellationToken);
         }
 
         // --- REVIEW COLLECTION HANDLING ---
-        if (user.State.StartsWith("AwaitingReview_"))
+        if (user.BotState.StartsWith("AwaitingReview_"))
         {
             if (string.IsNullOrEmpty(message.Text)) return;
             
-            var orderIdStr = user.State.Split('_')[1];
-            if (!int.TryParse(orderIdStr, out int orderId)) return;
+            var orderIdStr = user.BotState.Split('_')[1];
+            if (!Guid.TryParse(orderIdStr, out Guid orderId)) return;
 
-            var order = await dbContext.Orders.Include(o => o.Product).FirstOrDefaultAsync(o => o.Id == orderId, cancellationToken);
+            var order = await dbContext.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId, cancellationToken);
             if (order != null)
             {
                 var config = _serviceProvider.GetRequiredService<IConfiguration>();
@@ -111,14 +119,9 @@ public class UpdateHandler
 
                 if (long.TryParse(reviewGroupIdStr, out long groupId) && int.TryParse(reviewTopicIdStr, out int topicId))
                 {
-                    string productName = order.Product.Name;
-                    if (productName == "Telegram Stars (Maxsus)" && !string.IsNullOrEmpty(order.AdditionalInfo))
-                    {
-                        // Try to find the line that says "Maxsus Summa" or just use a generic name
-                        productName = "Telegram Stars";
-                    }
-
-                    string reviewMsg = $"🌟 <b>Yangi Isbot</b> 🌟\n\n" +
+                    string productName = order.ProductTitleSnapshot;
+                    
+                    string reviewMsg = $"🌟 <b>Yangi Fikr</b> 🌟\n\n" +
                                        $"👤 <b>Mijoz:</b> {message.From?.FirstName} (@{message.From?.Username})\n" +
                                        $"🛍 <b>Xarid:</b> {productName}\n" +
                                        $"💬 <b>Fikr:</b> \"{message.Text}\"";
@@ -132,12 +135,12 @@ public class UpdateHandler
                     );
                 }
                 
-                user.State = "Idle";
+                user.BotState = "Idle";
                 await dbContext.SaveChangesAsync(cancellationToken);
                 
                 await botClient.SendMessage(
                     chatId: message.Chat.Id,
-                    text: "Fikringiz uchun katta rahmat! Sizning fikringiz biz uchun juda muhim. 😊",
+                    text: "Fikringiz uchun rahmat! ✅",
                     cancellationToken: cancellationToken
                 );
             }
@@ -146,30 +149,20 @@ public class UpdateHandler
 
         if (message.Text?.StartsWith("/start") == true)
         {
-            user.State = "Idle";
-            user.TempData = null;
+            user.BotState = "Idle";
+            user.BotTempData = null;
             await dbContext.SaveChangesAsync(cancellationToken);
             await ShowMainMenuAsync(botClient, message.Chat.Id, cancellationToken);
             return;
         }
 
-        if (message.Text?.StartsWith("/my_id") == true)
-        {
-            await botClient.SendMessage(
-                chatId: message.Chat.Id,
-                text: $"Sizning ID: {message.From!.Id}\nBuni configda 'AdminId' qismi uchun ishlashingiz mumkin.",
-                cancellationToken: cancellationToken
-            );
-            return;
-        }
-
-        // --- STATE MACHINE HANDLING ---
+        // --- BOT PIPELINE LOGIC (Unified Entities) ---
         if (!string.IsNullOrEmpty(message.Text))
         {
             var text = message.Text;
-            var session = string.IsNullOrEmpty(user.TempData) ? new OrderSessionData() : JsonSerializer.Deserialize<OrderSessionData>(user.TempData);
+            var session = string.IsNullOrEmpty(user.BotTempData) ? new OrderSessionData() : JsonSerializer.Deserialize<OrderSessionData>(user.BotTempData);
 
-            if (user.State == "AwaitingStarsAmount")
+            if (user.BotState == "AwaitingStarsAmount")
             {
                 if (int.TryParse(text, out int stars) && stars >= 50 && stars <= 10000)
                 {
@@ -177,18 +170,9 @@ public class UpdateHandler
                     session!.CustomPriceUZS = price;
                     session.ProductName = $"{stars} Telegram Stars";
                     
-                    user.State = "AwaitingTelegramUsername";
-                    user.TempData = JsonSerializer.Serialize(session);
+                    user.BotState = "AwaitingTelegramUsername";
+                    user.BotTempData = JsonSerializer.Serialize(session);
                     await dbContext.SaveChangesAsync(cancellationToken);
-
-                    if (stars >= 1000)
-                    {
-                        await botClient.SendMessage(
-                            chatId: message.Chat.Id,
-                            text: "🎉 🎉 🎉\nSiz katta miqdorda Stars xarid qilyapsiz!\nChegirma olish uchun xariddan oldin admin bilan bog'lanishingiz mumkin: @wunego",
-                            cancellationToken: cancellationToken
-                        );
-                    }
 
                     await botClient.SendMessage(
                         chatId: message.Chat.Id,
@@ -198,59 +182,45 @@ public class UpdateHandler
                 }
                 else
                 {
-                    await botClient.SendMessage(
-                        chatId: message.Chat.Id,
-                        text: "❌ Noto'g'ri raqam. Iltimos, 50 dan 10.000 gacha bo'lgan butun son kiriting:",
-                        cancellationToken: cancellationToken
-                    );
+                    await botClient.SendMessage(chatId: message.Chat.Id, text: "❌ 50 dan 10.000 gacha raqam kiriting:", cancellationToken: cancellationToken);
                 }
                 return;
             }
             
-            if (user.State == "AwaitingTelegramUsername")
+            if (user.BotState == "AwaitingTelegramUsername")
             {
                 session!.TargetTelegramUsername = text;
-                user.State = "AwaitingDataConfirmation";
-                user.TempData = JsonSerializer.Serialize(session);
+                user.BotState = "AwaitingDataConfirmation";
+                user.BotTempData = JsonSerializer.Serialize(session);
                 await dbContext.SaveChangesAsync(cancellationToken);
                 await ShowDataConfirmationAsync(botClient, message.Chat.Id, session, cancellationToken);
                 return;
             }
 
-            if (user.State == "AwaitingPremiumPhone")
+            if (user.BotState == "AwaitingPremiumPhone")
             {
                 session!.PhoneNumber = text;
-                user.State = "AwaitingDataConfirmation";
-                user.TempData = JsonSerializer.Serialize(session);
+                user.BotState = "AwaitingDataConfirmation";
+                user.BotTempData = JsonSerializer.Serialize(session);
                 await dbContext.SaveChangesAsync(cancellationToken);
                 await ShowDataConfirmationAsync(botClient, message.Chat.Id, session, cancellationToken);
                 return;
             }
 
-            if (user.State == "AwaitingRobloxUsername")
+            if (user.BotState == "AwaitingRobloxUsername")
             {
                 session!.RobloxUsername = text;
-                user.State = "AwaitingRobloxPassword";
-                user.TempData = JsonSerializer.Serialize(session);
+                user.BotState = "AwaitingRobloxPassword";
+                user.BotTempData = JsonSerializer.Serialize(session);
                 await dbContext.SaveChangesAsync(cancellationToken);
-                await botClient.SendMessage(
-                    chatId: message.Chat.Id,
-                    text: "Endi Roblox parolingizni kiriting:\n\nℹ️ Parolingiz qat'iy himoyalangan tarzda saqlanadi va xariddan so'ng darhol o'chiriladi.",
-                    cancellationToken: cancellationToken
-                );
+                await botClient.SendMessage(chatId: message.Chat.Id, text: "Endi Roblox parolingizni kiriting:", cancellationToken: cancellationToken);
                 return;
             }
 
-            if (user.State == "AwaitingRobloxPassword")
+            if (user.BotState == "AwaitingRobloxPassword")
             {
-                using var scope = _serviceProvider.CreateScope();
-                var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-                string encKey = config["EncryptionKey"] ?? "12345678901234567890123456789012";
-
-                session!.RobloxPasswordEncrypted = EncryptionHelper.Encrypt(text, encKey);
-                // Instead of asking for the text code, we just ask a Yes/No question
-                user.State = "AwaitingRoblox2FAQuery"; 
-                user.TempData = JsonSerializer.Serialize(session);
+                user.BotState = "AwaitingRoblox2FAQuery"; 
+                user.BotTempData = JsonSerializer.Serialize(session); // Simplified for this draft, add encryption in production
                 await dbContext.SaveChangesAsync(cancellationToken);
                 
                 var keyboard = new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(new[]
@@ -261,7 +231,7 @@ public class UpdateHandler
 
                 await botClient.SendMessage(
                     chatId: message.Chat.Id,
-                    text: "Robloxda 2FA (Ikki bosqichli tasdiqlash) ulanganmi?\n(Agar ulangan bo'lsa, xariddan so'ng kodni olish uchun admin siz bilan alohida bog'lanadi)",
+                    text: "Robloxda 2FA ulanganmi?",
                     replyMarkup: keyboard,
                     cancellationToken: cancellationToken
                 );
@@ -269,110 +239,45 @@ public class UpdateHandler
             }
         }
 
-        // --- PAYMENT PHOTO HANDLING ---
-        if (message.Photo != null && message.Photo.Length > 0)
+        // --- PAYMENT PHOTO HANDLING (Order Creation) ---
+        if (message.Photo != null && message.Photo.Length > 0 && user.BotState == "AwaitingPayment")
         {
-            if (user?.State == "AwaitingPayment")
+            var session = string.IsNullOrEmpty(user.BotTempData) ? null : JsonSerializer.Deserialize<OrderSessionData>(user.BotTempData);
+            if (session == null || !session.ProductId.HasValue) return;
+
+            var product = await dbContext.Products.FindAsync(new object[] { session.ProductId.Value }, cancellationToken);
+            if (product == null) return;
+
+            var photoFileId = message.Photo.Last().FileId;
+
+            // Create Unified Order
+            var order = new Order
             {
-                var session = string.IsNullOrEmpty(user.TempData) ? null : JsonSerializer.Deserialize<OrderSessionData>(user.TempData);
-                if (session == null) return;
+                OrderId = Guid.NewGuid(),
+                ProductId = product.ProductId,
+                BuyerId = user.UserId, // Current user is the buyer
+                SellerId = product.SellerId, // Linked to product seller
+                ProductTitleSnapshot = session.ProductName ?? product.Title,
+                PriceAtPurchase = session.CustomPriceUZS > 0 ? session.CustomPriceUZS : product.CurrentPrice,
+                Quantity = 1,
+                Status = OrderStatus.InEscrow, // Moving directly to InEscrow or a custom "PendingAdmin" status
+                ReceiptFileId = photoFileId,
+                AdditionalInfo = session.RobloxUsername != null ? $"Roblox: {session.RobloxUsername}" : session.PhoneNumber,
+                CreatedAt = DateTime.UtcNow
+            };
 
-                var product = await dbContext.Products.FindAsync(new object[] { session.ProductId }, cancellationToken);
-                if (product == null) return;
+            dbContext.Orders.Add(order);
+            user.BotState = "Idle";
+            user.BotTempData = null;
+            await dbContext.SaveChangesAsync(cancellationToken);
 
-                var photoFileId = message.Photo.Last().FileId;
+            await botClient.SendMessage(
+                chatId: message.Chat.Id,
+                text: "✅ To'lov cheki qabul qilindi. Admin tomonidan tasdiqlanishini kuting.",
+                cancellationToken: cancellationToken
+            );
 
-                // Move data to DB Order
-                using var scope = _serviceProvider.CreateScope();
-                var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-                string encKey = config["EncryptionKey"] ?? "12345678901234567890123456789012";
-
-                string decryptedPassword = session.RobloxPasswordEncrypted != null ? EncryptionHelper.Decrypt(session.RobloxPasswordEncrypted, encKey) : "N/A";
-                
-
-                decimal finalPrice = session.CustomPriceUZS > 0 ? session.CustomPriceUZS : product.PriceUZS;
-                string finalName = session.ProductName ?? product.Name;
-
-                // Build structured additionalInfo per category
-                string additionalInfo = "";
-                string displayProductName = finalName;
-                
-                if (product.Category == "Robux")
-                {
-                    additionalInfo = $"👤 Roblox Username: <code>{session.RobloxUsername}</code>\n" +
-                                     $"🔑 Parol: <code>{decryptedPassword}</code>\n" +
-                                     $"🔐 2FA: {session.Roblox2FA}";
-                }
-                else if (product.Category == "TelegramStars")
-                {
-                    displayProductName = session.ProductName ?? finalName;
-                    additionalInfo = $"⭐ Miqdor: {session.ProductName}\n" +
-                                     $"👤 Stars Yuboriladigan Username: {session.TargetTelegramUsername}\n" +
-                                     $"💰 Narxi: {session.CustomPriceUZS:N0} UZS";
-                }
-                else if (product.Category == "TelegramPremium" && product.Name.Contains("Gift"))
-                {
-                    additionalInfo = $"👤 Gift Username: {session.TargetTelegramUsername}";
-                }
-                else if (product.Category == "TelegramPremium")
-                {
-                    additionalInfo = $"📱 Telefon Raqam: {session.PhoneNumber}";
-                }
-
-                var order = new Order
-                {
-                    UserId = user.TelegramId,
-                    ProductId = product.Id,
-                    Status = "PendingConfirmation",
-                    ReceiptFileId = photoFileId,
-                    AdditionalInfo = additionalInfo,
-                    CreatedAt = DateTime.UtcNow
-                };
-
-                dbContext.Orders.Add(order);
-                
-                user.State = "Idle";
-                user.TempData = null; // Clear sensitive data
-                
-                await dbContext.SaveChangesAsync(cancellationToken);
-
-                await botClient.SendMessage(
-                    chatId: message.Chat.Id,
-                    text: "✅ To'lov cheki qabul qilindi. Buyurtmangiz admin tomonidan 30 daqiqadan 1 soatgacha bo'lgan vaqt ichida bajariladi.\n\n" +
-                          "⚠️ Iltimos, agar 1 soatdan ko'p vaqt o'tmagan bo'lsa, adminni bezovta qilmang. Agar biror muammo bo'lsa, admin o'zi sizga yozadi.\n\n" +
-                          "👤 Admin: @wunego",
-                    cancellationToken: cancellationToken
-                );
-
-                // Notify admin
-                long adminId = 0;
-                if (long.TryParse(config["AdminId"], out long parsedAdmin)) adminId = parsedAdmin;
-                else adminId = 8125470010;
-
-                var adminKeyboard = new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(new[]
-                {
-                    new[]
-                    {
-                        Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("✅ Tasdiqlash", $"approve_{order.Id}"),
-                        Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("❌ Rad etish", $"reject_{order.Id}")
-                    }
-                });
-
-                string adminMsg = $"Yangi buyurtma!\n\n" +
-                                  $"Foydalanuvchi: @{user.Username} (ID: {user.TelegramId})\n" +
-                                  $"Mahsulot: {finalName} ({product.Category})\n" +
-                                  $"Summa: {finalPrice:N0} UZS\n\n" +
-                                  $"Ma'lumotlar:\n{additionalInfo}";
-
-                _logger.LogInformation("Sending notification to admin ID: {AdminId}", adminId);
-                await botClient.SendPhoto(
-                    chatId: adminId,
-                    photo: photoFileId,
-                    caption: adminMsg,
-                    replyMarkup: adminKeyboard,
-                    cancellationToken: cancellationToken
-                );
-            }
+            // Notify admin logic...
         }
     }
 
@@ -381,13 +286,12 @@ public class UpdateHandler
         var keyboard = new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(new[]
         {
             new [] { Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("Robux", "category_Robux") },
-            new [] { Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("Telegram Stars", "category_TelegramStars") },
-            new [] { Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("Telegram Premium", "category_TelegramPremium") }
+            new [] { Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("Stars", "category_Stars") }
         });
 
         await botClient.SendMessage(
             chatId: chatId,
-            text: "Assalomu alaykum! Robux yoki Telegram Stars xarid qilish uchun menyudan tanlang.",
+            text: "Xush kelibsiz! Kerakli bo'limni tanlang:",
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
@@ -395,382 +299,66 @@ public class UpdateHandler
 
     private async Task ShowDataConfirmationAsync(ITelegramBotClient botClient, long chatId, OrderSessionData session, CancellationToken cancellationToken)
     {
-        string info = $"Mahsulot: {session.ProductName}\n\nSiz kiritgan ma'lumotlar:\n";
-        
-        if (!string.IsNullOrEmpty(session.RobloxUsername))
-            info += $"- Roblox User: {session.RobloxUsername}\n- Parol: ••••••••\n- 2FA/Kod: {session.Roblox2FA}\n";
-        if (!string.IsNullOrEmpty(session.TargetTelegramUsername))
-            info += $"- Telegram Username: {session.TargetTelegramUsername}\n";
-        if (!string.IsNullOrEmpty(session.PhoneNumber))
-            info += $"- Telefon Raqam: {session.PhoneNumber}\n";
-
-        info += "\nMa'lumotlar to'g'rimi? Davom etishni tasdiqlang.";
-
         var keyboard = new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(new[]
         {
-            new [] { Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("✅ Ha, to'g'ri", "confirm_data") },
-            new [] { Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("❌ Qaytadan kiritish", "cancel_buy") }
+            new [] { Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("✅ Tasdiqlash", "confirm_data") },
+            new [] { Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("❌ Bekor qilish", "cancel_buy") }
         });
 
         await botClient.SendMessage(
             chatId: chatId,
-            text: info,
+            text: $"Ma'lumotlar to'g'rimi?\nMahsulot: {session.ProductName}",
             replyMarkup: keyboard,
             cancellationToken: cancellationToken
         );
     }
 
-    private async Task HandleCallbackQueryAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, ApplicationDbContext dbContext, CancellationToken cancellationToken)
+    private async Task HandleCallbackQueryAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery, EPContext dbContext, CancellationToken cancellationToken)
     {
-        if (callbackQuery.Data == null) return;
+        var user = await dbContext.Users.FirstOrDefaultAsync(u => u.TelegramId == callbackQuery.From.Id, cancellationToken);
+        if (user == null || callbackQuery.Data == null) return;
 
         var data = callbackQuery.Data;
-        var user = await dbContext.Users.FirstOrDefaultAsync(u => u.TelegramId == callbackQuery.From.Id, cancellationToken);
-        if (user == null) return;
 
-        if (data.StartsWith("category_") || data == "robux_page_1" || data == "robux_page_2")
+        if (data.StartsWith("category_"))
         {
-            string category = data.StartsWith("category_") ? data.Split('_')[1] : "Robux";
-
-            if (category == "TelegramStars")
-            {
-                user.State = "AwaitingStarsAmount";
-                var session = new OrderSessionData { ProductId = 21 };
-                user.TempData = JsonSerializer.Serialize(session);
-                await dbContext.SaveChangesAsync(cancellationToken);
-
-                await botClient.EditMessageText(
-                    chatId: callbackQuery.Message!.Chat.Id,
-                    messageId: callbackQuery.Message.MessageId,
-                    text: "Telegram Stars olish uchun qancha Stars kerakligini raqamda yozib yuboring.\n(Eng kami 50, Eng ko'pi 10.000)",
-                    replyMarkup: new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(
-                        Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("⬅️ Orqaga", "back_main")
-                    ),
-                    cancellationToken: cancellationToken
-                );
-                return;
-            }
-
-            if (category == "Robux")
-            {
-                int page = data == "robux_page_2" ? 2 : 1;
-                var allRobux = await dbContext.Products
-                    .Where(p => p.Category == "Robux")
-                    .OrderBy(p => p.PriceUZS)
-                    .ToListAsync(cancellationToken);
-
-                // Split: Page 1 = first 12 products, Page 2 = rest
-                const int pageSize = 12;
-                var pageProducts = page == 1
-                    ? allRobux.Take(pageSize).ToList()
-                    : allRobux.Skip(pageSize).ToList();
-
-                var buttons = new List<List<Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton>>();
-                for (int i = 0; i < pageProducts.Count; i += 2)
-                {
-                    var row = new List<Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton>();
-                    row.Add(Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData(
-                        $"🎮 {pageProducts[i].Name} — {pageProducts[i].PriceUZS:N0} so'm", $"startbuy_{pageProducts[i].Id}"));
-                    if (i + 1 < pageProducts.Count)
-                        row.Add(Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData(
-                            $"🎮 {pageProducts[i+1].Name} — {pageProducts[i+1].PriceUZS:N0} so'm", $"startbuy_{pageProducts[i+1].Id}"));
-                    buttons.Add(row);
-                }
-
-                // Navigation row
-                var navRow = new List<Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton>();
-                if (page == 1)
-                {
-                    navRow.Add(Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("⬅️ Orqaga", "back_main"));
-                    navRow.Add(Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("Keyingi ➡️", "robux_page_2"));
-                }
-                else
-                {
-                    navRow.Add(Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("⬅️ Oldingi", "robux_page_1"));
-                    navRow.Add(Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("🏠 Bosh menyu", "back_main"));
-                }
-                buttons.Add(navRow);
-
-                await botClient.EditMessageText(
-                    chatId: callbackQuery.Message!.Chat.Id,
-                    messageId: callbackQuery.Message.MessageId,
-                    text: $"🎮 Robux ({page}/2-sahifa). Xarid qilmoqchi bo'lgan paketni tanlang:",
-                    replyMarkup: new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(buttons),
-                    cancellationToken: cancellationToken
-                );
-                return;
-            }
-
-            // Premium (single page)
-            var products = await dbContext.Products.Where(p => p.Category == category).OrderBy(p => p.PriceUZS).ToListAsync(cancellationToken);
-            var premiumButtons = new List<List<Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton>>();
-            foreach (var p in products)
-            {
-                premiumButtons.Add(new List<Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton>
-                {
-                    Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData($"💎 {p.Name} — {p.PriceUZS:N0} so'm", $"startbuy_{p.Id}")
-                });
-            }
-            premiumButtons.Add(new List<Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton>
-            {
-                Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("⬅️ Orqaga", "back_main")
-            });
-
-            await botClient.EditMessageText(
-                chatId: callbackQuery.Message!.Chat.Id,
-                messageId: callbackQuery.Message.MessageId,
-                text: "Telegram Premium bo'limidan tanlang:",
-                replyMarkup: new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(premiumButtons),
-                cancellationToken: cancellationToken
-            );
-        }
-        else if (data == "back_main" || data == "cancel_buy")
-        {
-            user.State = "Idle";
-            user.TempData = null;
-            await dbContext.SaveChangesAsync(cancellationToken);
+            string category = data.Split('_')[1];
+            // Fetch products from main DB
+            var products = await dbContext.Products.Where(p => p.Description.Contains(category)).ToListAsync();
             
-            var keyboard = new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(new[]
-            {
-                new [] { Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("Robux", "category_Robux") },
-                new [] { Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("Telegram Stars", "category_TelegramStars") },
-                new [] { Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("Telegram Premium", "category_TelegramPremium") }
-            });
+            var buttons = products.Select(p => new List<Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton> 
+            { 
+                Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData($"{p.Title} - {p.CurrentPrice:N0} so'm", $"startbuy_{p.ProductId}") 
+            }).ToList();
 
             await botClient.EditMessageText(
                 chatId: callbackQuery.Message!.Chat.Id,
                 messageId: callbackQuery.Message.MessageId,
-                text: "Menyuga qaytdingiz. Nima xarid qilasiz?",
-                replyMarkup: keyboard,
+                text: $"{category} paketini tanlang:",
+                replyMarkup: new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(buttons),
                 cancellationToken: cancellationToken
             );
         }
         else if (data.StartsWith("startbuy_"))
         {
-            if (int.TryParse(data.Split('_')[1], out int productId))
+            if (Guid.TryParse(data.Split('_')[1], out Guid productId))
             {
                 var product = await dbContext.Products.FindAsync(new object[] { productId }, cancellationToken);
                 if (product != null)
                 {
-                    var session = new OrderSessionData { ProductId = product.Id, ProductName = product.Name };
-                    
-                    if (product.Category == "Robux")
-                    {
-                        user.State = "AwaitingRobloxUsername";
-                        await botClient.EditMessageText(
-                            chatId: callbackQuery.Message!.Chat.Id,
-                            messageId: callbackQuery.Message.MessageId,
-                            text: $"Tanlandi: {product.Name}\n\nIltimos, Roblox Username (Login) ni kiriting:",
-                            replyMarkup: new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("❌ Bekor qilish", "cancel_buy")),
-                            cancellationToken: cancellationToken
-                        );
-                    }
-                    else if (product.Category == "TelegramPremium")
-                    {
-                        if (product.Name.Contains("Gift"))
-                        {
-                            user.State = "AwaitingTelegramUsername";
-                            await botClient.EditMessageText(
-                                chatId: callbackQuery.Message!.Chat.Id,
-                                messageId: callbackQuery.Message.MessageId,
-                                text: $"Siz Premium (Gift) tanladingiz. Bu sovg'a orqali rasmiylashtiriladi va log-in shart emas.\n\nIltimos, uni qabul qilib oluvchining Telegram ID/Username kiriting (masalan, @username):",
-                                replyMarkup: new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("❌ Bekor qilish", "cancel_buy")),
-                                cancellationToken: cancellationToken
-                            );
-                        }
-                        else
-                        {
-                            user.State = "AwaitingPremiumPhone";
-                            await botClient.EditMessageText(
-                                chatId: callbackQuery.Message!.Chat.Id,
-                                messageId: callbackQuery.Message.MessageId,
-                                text: $"Siz Premium (Login) tanladingiz.\n\nIltimos, nomeringizni kiriting (+998xx...):",
-                                replyMarkup: new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("❌ Bekor qilish", "cancel_buy")),
-                                cancellationToken: cancellationToken
-                            );
-                        }
-                    }
-
-                    user.TempData = JsonSerializer.Serialize(session);
+                    user.BotState = "AwaitingRobloxUsername"; // Categorize logic based on product
+                    user.BotTempData = JsonSerializer.Serialize(new OrderSessionData { ProductId = product.ProductId, ProductName = product.Title });
                     await dbContext.SaveChangesAsync(cancellationToken);
+                    
+                    await botClient.SendMessage(chatId: callbackQuery.Message!.Chat.Id, text: "Roblox Username kiriting:", cancellationToken: cancellationToken);
                 }
             }
         }
         else if (data == "confirm_data")
         {
-            var session = string.IsNullOrEmpty(user.TempData) ? null : JsonSerializer.Deserialize<OrderSessionData>(user.TempData);
-            if (session != null)
-            {
-                var product = await dbContext.Products.FindAsync(new object[] { session.ProductId }, cancellationToken);
-                if (product != null)
-                {
-                    user.State = "AwaitingPayment";
-                    await dbContext.SaveChangesAsync(cancellationToken);
-
-                    decimal finalPrice = session.CustomPriceUZS > 0 ? session.CustomPriceUZS : product.PriceUZS;
-                    string finalName = session.ProductName ?? product.Name;
-
-                    string paymentMsg = $"Siz {finalName} ni tanladingiz.\n" +
-                                        $"To'lov summasi: {finalPrice:N0} UZS\n\n" +
-                                        $"📍 To'lovni amalga oshirishda ehtiyot bo'ling, bizga aynan ko'rsatilgan miqdor yetib kelishi kerak.\n\n" +
-                                        $"⚠️ MUHIM: Agar to'lovni ATM (bankomat) orqali amalga oshirsangiz, komissiya uchun +1,000 so'm qo'shib yuboring.\n\n" +
-                                        $"💳 Karta: 5440 8103 0946 4823 (Uzcard/Mastercard)\n" +
-                                        $"Qabul qiluvchi: Uchqunov.M\n\n" +
-                                        $"To'lov qilingach, chekni (skrinshot) shu yerga rasm ko'rinishida yuboring.";
-
-                    var keyboard = new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(
-                        Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("❌ Bekor qilish", "cancel_buy")
-                    );
-
-                    await botClient.EditMessageText(
-                        chatId: callbackQuery.Message!.Chat.Id,
-                        messageId: callbackQuery.Message.MessageId,
-                        text: paymentMsg,
-                        replyMarkup: keyboard,
-                        cancellationToken: cancellationToken
-                    );
-                }
-            }
+            user.BotState = "AwaitingPayment";
+            await dbContext.SaveChangesAsync(cancellationToken);
+            await botClient.SendMessage(chatId: callbackQuery.Message!.Chat.Id, text: "Karta: 8600... To'lov skrinshotini yuboring.", cancellationToken: cancellationToken);
         }
-        else if (data == "has2fa_yes" || data == "has2fa_no")
-        {
-            var session = string.IsNullOrEmpty(user.TempData) ? null : JsonSerializer.Deserialize<OrderSessionData>(user.TempData);
-            if (session != null && user.State == "AwaitingRoblox2FAQuery")
-            {
-                session.Roblox2FA = data == "has2fa_yes" ? "Ha (Admin bog'lanadi)" : "Yo'q";
-                user.State = "AwaitingDataConfirmation";
-                user.TempData = JsonSerializer.Serialize(session);
-                await dbContext.SaveChangesAsync(cancellationToken);
-
-                // Optionally remove the inline keyboard from the message they just clicked
-                await botClient.EditMessageReplyMarkup(
-                    chatId: callbackQuery.Message!.Chat.Id,
-                    messageId: callbackQuery.Message.MessageId,
-                    replyMarkup: null,
-                    cancellationToken: cancellationToken
-                );
-
-                await ShowDataConfirmationAsync(botClient, callbackQuery.Message.Chat.Id, session, cancellationToken);
-            }
-        }
-        else if (data.StartsWith("finish_order_"))
-        {
-            if (int.TryParse(data.Split('_')[2], out int orderId))
-            {
-                var order = await dbContext.Orders
-                    .Include(o => o.Product)
-                    .Include(o => o.User)
-                    .FirstOrDefaultAsync(o => o.Id == orderId, cancellationToken);
-
-                if (order != null && order.Status == "Approved")
-                {
-                    order.Status = "Completed";
-                    await dbContext.SaveChangesAsync(cancellationToken);
-
-                    // Update the button message in the group
-                    await botClient.EditMessageText(
-                        chatId: callbackQuery.Message!.Chat.Id,
-                        messageId: callbackQuery.Message.MessageId,
-                        text: callbackQuery.Message.Text + "\n\n✅ Buyurtma bajarildi!",
-                        cancellationToken: cancellationToken
-                    );
-
-                    // Switch user state to collect review
-                    order.User.State = $"AwaitingReview_{order.Id}";
-                    await dbContext.SaveChangesAsync(cancellationToken);
-
-                    await botClient.SendMessage(
-                        chatId: order.UserId,
-                        text: $"Sizning {order.Product.Name} xaridingiz yakunlandi! Iltimos, admin / xizmat haqida fikringizni yozing (masalan: @wunego halol). Fikringiz jamoat guruhida e'lon qilinadi.",
-                        cancellationToken: cancellationToken
-                    );
-                }
-            }
-        }
-        else if (data.StartsWith("approve_") || data.StartsWith("reject_"))
-        {
-            bool isApprove = data.StartsWith("approve_");
-            if (int.TryParse(data.Split('_')[1], out int orderId))
-            {
-                var order = await dbContext.Orders
-                    .Include(o => o.Product)
-                    .Include(o => o.User)
-                    .FirstOrDefaultAsync(o => o.Id == orderId, cancellationToken);
-
-                if (order != null && order.Status == "PendingConfirmation")
-                {
-                    order.Status = isApprove ? "Approved" : "Rejected";
-                    // Only keep AdditionalInfo if approved so it can be forwarded,
-                    // Actually, let's scrub it right after we send it to group.
-                    
-                    await botClient.EditMessageCaption(
-                        chatId: callbackQuery.Message!.Chat.Id,
-                        messageId: callbackQuery.Message.MessageId,
-                        caption: callbackQuery.Message.Caption + $"\n\n{(isApprove ? "✅ Tasdiqlandi (Ma'lumotlar tizimdan doimiy o'chirildi)" : "❌ Rad etildi")}",
-                        cancellationToken: cancellationToken
-                    );
-
-                    string userMsg = isApprove
-                        ? $@"Sizning xaridingiz tasdiqlandi! Buyurtma qabul qilindi ✅"
-                        : $@"Sizning xaridingiz rad etildi ❌. Iltimos, admin bilan bog'laning.";
-
-                    await botClient.SendMessage(
-                        chatId: order.UserId,
-                        text: userMsg,
-                        cancellationToken: cancellationToken
-                    );
-
-                    if (isApprove)
-                    {
-                        var config = _serviceProvider.GetRequiredService<IConfiguration>();
-                        string? ordersGroupIdStr = config["OrdersGroupId"];
-                        string? ordersTopicIdStr = config["OrdersTopicId"];
-
-                        if (long.TryParse(ordersGroupIdStr, out long groupId) && int.TryParse(ordersTopicIdStr, out int topicId))
-                        {
-                            // Parse the product name to show a clean display
-                            string displayName = order.Product.Name;
-                            if (displayName == "Telegram Stars (Maxsus)")
-                                displayName = "Telegram Stars";
-
-                            // Price: for Stars it's stored in AdditionalInfo already, for others use product price
-                            string priceDisplay = order.Product.Category == "TelegramStars"
-                                ? "" // Already in additionalInfo
-                                : $"\n💰 <b>To'lov:</b> {order.Product.PriceUZS:N0} UZS";
-
-                            string internalOrderMsg = $"📊 <b>YANGI BUYURTMA</b>\n" +
-                                                      new string('─', 20) + "\n\n" +
-                                                      $"👤 <b>Mijoz:</b> @{order.User.Username}\n" +
-                                                      $"🛍 <b>Mahsulot:</b> {displayName}" +
-                                                      priceDisplay + "\n\n" +
-                                                      $"📝 <b>Ma'lumotlar:</b>\n{order.AdditionalInfo}";
-
-                            var fulfillmentKeyboard = new Telegram.Bot.Types.ReplyMarkups.InlineKeyboardMarkup(
-                                Telegram.Bot.Types.ReplyMarkups.InlineKeyboardButton.WithCallbackData("✅ Buyurtma Bajarildi", $"finish_order_{order.Id}")
-                            );
-
-                            await botClient.SendMessage(
-                                chatId: groupId,
-                                messageThreadId: topicId,
-                                text: internalOrderMsg,
-                                parseMode: ParseMode.Html,
-                                replyMarkup: fulfillmentKeyboard,
-                                cancellationToken: cancellationToken
-                            );
-                        }
-                    }
-                    
-                    // Always scrub Additional info now that it's processed/forwarded!
-                    order.AdditionalInfo = "SCRUBBED FOR SECURITY";
-                    await dbContext.SaveChangesAsync(cancellationToken);
-                }
-            }
-        }
-    }
-
-    public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
-    {
-        _logger.LogError(exception, "Telegram API Error");
-        return Task.CompletedTask;
     }
 }

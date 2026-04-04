@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Telegram.Bot;
-using TgRobuxBot.Models;
 using TgRobuxBot.Services;
+using EasyPay.Infrastructure.Database;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -12,7 +12,7 @@ builder.Configuration.AddUserSecrets<Program>();
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
     ?? throw new InvalidOperationException("DefaultConnection is missing in appsettings.json");
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<EPContext>(options =>
     options.UseNpgsql(connectionString));
 
 var botToken = builder.Configuration["BotToken"];

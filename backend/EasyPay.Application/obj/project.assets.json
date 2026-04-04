@@ -801,11 +801,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj",
+      "projectUniqueName": "/home/uchqunov/RiderProjects/EasyPay/backend/EasyPay.Application/EasyPay.Application.csproj",
       "projectName": "EasyPay.Application",
-      "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj",
+      "projectPath": "/home/uchqunov/RiderProjects/EasyPay/backend/EasyPay.Application/EasyPay.Application.csproj",
       "packagesPath": "/home/uchqunov/.nuget/packages/",
-      "outputPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Application/obj/",
+      "outputPath": "/home/uchqunov/RiderProjects/EasyPay/backend/EasyPay.Application/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/uchqunov/.nuget/NuGet/NuGet.Config"
@@ -820,11 +820,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj": {
-              "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj"
+            "/home/uchqunov/RiderProjects/EasyPay/backend/EasyPay.Core/EasyPay.Core.csproj": {
+              "projectPath": "/home/uchqunov/RiderProjects/EasyPay/backend/EasyPay.Core/EasyPay.Core.csproj"
             },
-            "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {
-              "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj"
+            "/home/uchqunov/RiderProjects/EasyPay/backend/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {
+              "projectPath": "/home/uchqunov/RiderProjects/EasyPay/backend/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj"
             }
           }
         }
@@ -868,7 +868,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/var/run/host/usr/share/dotnet/sdk/8.0.418/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.418/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

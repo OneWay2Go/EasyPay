@@ -1,36 +1,43 @@
 {
   "format": 1,
   "restore": {
-    "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Web/EasyPay.Web.csproj": {}
+    "D:\\Projects\\EasyPay\\src\\EasyPay.Web\\EasyPay.Web.csproj": {}
   },
   "projects": {
-    "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj": {
+    "D:\\Projects\\EasyPay\\src\\EasyPay.Application\\EasyPay.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj",
+        "projectUniqueName": "D:\\Projects\\EasyPay\\src\\EasyPay.Application\\EasyPay.Application.csproj",
         "projectName": "EasyPay.Application",
-        "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj",
-        "packagesPath": "/home/uchqunov/.nuget/packages/",
-        "outputPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Application/obj/",
+        "projectPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Application\\EasyPay.Application.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Application\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\VisualStudio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/uchqunov/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj": {
-                "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj"
+              "D:\\Projects\\EasyPay\\src\\EasyPay.Core\\EasyPay.Core.csproj": {
+                "projectPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Core\\EasyPay.Core.csproj"
               },
-              "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {
-                "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj"
+              "D:\\Projects\\EasyPay\\src\\EasyPay.Infrastructure\\EasyPay.Infrastructure.csproj": {
+                "projectPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Infrastructure\\EasyPay.Infrastructure.csproj"
               }
             }
           }
@@ -44,7 +51,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -74,26 +82,33 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/var/run/host/usr/share/dotnet/sdk/8.0.418/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj": {
+    "D:\\Projects\\EasyPay\\src\\EasyPay.Core\\EasyPay.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj",
+        "projectUniqueName": "D:\\Projects\\EasyPay\\src\\EasyPay.Core\\EasyPay.Core.csproj",
         "projectName": "EasyPay.Core",
-        "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj",
-        "packagesPath": "/home/uchqunov/.nuget/packages/",
-        "outputPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/obj/",
+        "projectPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Core\\EasyPay.Core.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Core\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\VisualStudio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/uchqunov/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -111,7 +126,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -132,34 +148,41 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/var/run/host/usr/share/dotnet/sdk/8.0.418/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {
+    "D:\\Projects\\EasyPay\\src\\EasyPay.Infrastructure\\EasyPay.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj",
+        "projectUniqueName": "D:\\Projects\\EasyPay\\src\\EasyPay.Infrastructure\\EasyPay.Infrastructure.csproj",
         "projectName": "EasyPay.Infrastructure",
-        "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj",
-        "packagesPath": "/home/uchqunov/.nuget/packages/",
-        "outputPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/obj/",
+        "projectPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Infrastructure\\EasyPay.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\VisualStudio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/uchqunov/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj": {
-                "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/EasyPay.Core.csproj"
+              "D:\\Projects\\EasyPay\\src\\EasyPay.Core\\EasyPay.Core.csproj": {
+                "projectPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Core\\EasyPay.Core.csproj"
               }
             }
           }
@@ -173,7 +196,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -216,37 +240,44 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/var/run/host/usr/share/dotnet/sdk/8.0.418/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Web/EasyPay.Web.csproj": {
+    "D:\\Projects\\EasyPay\\src\\EasyPay.Web\\EasyPay.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Web/EasyPay.Web.csproj",
+        "projectUniqueName": "D:\\Projects\\EasyPay\\src\\EasyPay.Web\\EasyPay.Web.csproj",
         "projectName": "EasyPay.Web",
-        "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Web/EasyPay.Web.csproj",
-        "packagesPath": "/home/uchqunov/.nuget/packages/",
-        "outputPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Web/obj/",
+        "projectPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Web\\EasyPay.Web.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Web\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\VisualStudio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/uchqunov/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj": {
-                "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Application/EasyPay.Application.csproj"
+              "D:\\Projects\\EasyPay\\src\\EasyPay.Application\\EasyPay.Application.csproj": {
+                "projectPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Application\\EasyPay.Application.csproj"
               },
-              "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj": {
-                "projectPath": "/home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Infrastructure/EasyPay.Infrastructure.csproj"
+              "D:\\Projects\\EasyPay\\src\\EasyPay.Infrastructure\\EasyPay.Infrastructure.csproj": {
+                "projectPath": "D:\\Projects\\EasyPay\\src\\EasyPay.Infrastructure\\EasyPay.Infrastructure.csproj"
               }
             }
           }
@@ -260,7 +291,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -296,7 +328,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/var/run/host/usr/share/dotnet/sdk/8.0.418/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -15,3 +15,8 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+# Игнорировать кэш NuGet и локальные настройки
+TgRobuxBot/.local/
+TgRobuxBot/bin/
+TgRobuxBot/obj/
+**/http-cache/

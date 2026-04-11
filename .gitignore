@@ -24,3 +24,5 @@
 /src/EasyPay.Core/obj
 /src/EasyPay.Application/bin
 /src/EasyPay.Application/obj
+/src/bin
+/src/obj

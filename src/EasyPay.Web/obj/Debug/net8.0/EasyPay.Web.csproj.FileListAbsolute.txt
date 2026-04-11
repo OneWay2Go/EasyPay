@@ -352,3 +352,14 @@
 /home/uchqunov/RiderProjects/EasyPay/backend/EasyPay.Web/obj/Debug/net8.0/EasyPay.Web.pdb
 /home/uchqunov/RiderProjects/EasyPay/backend/EasyPay.Web/obj/Debug/net8.0/EasyPay.Web.genruntimeconfig.cache
 /home/uchqunov/RiderProjects/EasyPay/backend/EasyPay.Web/obj/Debug/net8.0/ref/EasyPay.Web.dll
+D:\Projects\EasyPay\src\EasyPay.Web\obj\Debug\net8.0\EasyPay.Web.csproj.AssemblyReference.cache
+D:\Projects\EasyPay\src\EasyPay.Web\obj\Debug\net8.0\EasyPay.Web.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\EasyPay\src\EasyPay.Web\obj\Debug\net8.0\EasyPay.Web.AssemblyInfoInputs.cache
+D:\Projects\EasyPay\src\EasyPay.Web\obj\Debug\net8.0\EasyPay.Web.AssemblyInfo.cs
+D:\Projects\EasyPay\src\EasyPay.Web\obj\Debug\net8.0\EasyPay.Web.csproj.CoreCompileInputs.cache
+D:\Projects\EasyPay\src\EasyPay.Web\obj\Debug\net8.0\EasyPay.Web.MvcApplicationPartsAssemblyInfo.cs
+D:\Projects\EasyPay\src\EasyPay.Web\obj\Debug\net8.0\EasyPay.Web.MvcApplicationPartsAssemblyInfo.cache
+D:\Projects\EasyPay\src\EasyPay.Web\obj\Debug\net8.0\EasyPay.Web.sourcelink.json
+D:\Projects\EasyPay\src\EasyPay.Web\obj\Debug\net8.0\EasyPay.Web.dll
+D:\Projects\EasyPay\src\EasyPay.Web\obj\Debug\net8.0\refint\EasyPay.Web.dll
+D:\Projects\EasyPay\src\EasyPay.Web\obj\Debug\net8.0\EasyPay.Web.pdb

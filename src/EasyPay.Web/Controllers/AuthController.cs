@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Mvc;
+
 namespace EasyPay.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AuthController
+public class AuthController : ControllerBase
 {
     [HttpPost("verify")]
     public async Task<IActionResult> Verify(){

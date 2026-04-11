@@ -1,28 +1,29 @@
-.idea
-/src/.idea/.idea.EasyPay/.idea
-# Default ignored files
+# IDE & System Files
+.idea/
+.vs/
+*.vs/
+*.user
+*.suo
 /shelf/
 /workspace.xml
-# Rider ignored files
-/.idea.EasyPay.iml
-/modules.xml
-/projectSettingsUpdater.xml
-/contentModel.xml
-# Ignored default folder with query files
-/queries/
-# Datasource local storage ignored files
+
+# Build Artifacts (The most important part)
+**/bin/
+**/obj/
+**/ref/
+**/refint/
+
+# Cache & Temporary files
+*.cache
+**/project.assets.json
+**/project.nuget.cache
+**/http-cache/
+
+# NuGet and Bot specific (from your main branch)
+TgRobuxBot/.local/
+
+# Databases & Queries
 /dataSources/
 /dataSources.local.xml
-# Editor-based HTTP Client requests
+/queries/
 /httpRequests/
-/src/.vs
-/src/EasyPay.Web/bin
-/src/EasyPay.Web/obj
-/src/EasyPay.Infrastructure/bin
-/src/EasyPay.Infrastructure/obj
-/src/EasyPay.Core/bin
-/src/EasyPay.Core/obj
-/src/EasyPay.Application/bin
-/src/EasyPay.Application/obj
-/src/bin
-/src/obj

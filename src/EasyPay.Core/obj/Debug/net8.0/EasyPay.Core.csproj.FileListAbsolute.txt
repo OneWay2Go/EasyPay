@@ -22,3 +22,15 @@
 /home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/obj/Debug/net8.0/refint/EasyPay.Core.dll
 /home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/obj/Debug/net8.0/EasyPay.Core.pdb
 /home/uchqunov/RiderProjects/EasyPay/src/EasyPay.Core/obj/Debug/net8.0/ref/EasyPay.Core.dll
+D:\Projects\EasyPay\src\EasyPay.Core\bin\Debug\net8.0\EasyPay.Core.deps.json
+D:\Projects\EasyPay\src\EasyPay.Core\bin\Debug\net8.0\EasyPay.Core.dll
+D:\Projects\EasyPay\src\EasyPay.Core\bin\Debug\net8.0\EasyPay.Core.pdb
+D:\Projects\EasyPay\src\EasyPay.Core\obj\Debug\net8.0\EasyPay.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\EasyPay\src\EasyPay.Core\obj\Debug\net8.0\EasyPay.Core.AssemblyInfoInputs.cache
+D:\Projects\EasyPay\src\EasyPay.Core\obj\Debug\net8.0\EasyPay.Core.AssemblyInfo.cs
+D:\Projects\EasyPay\src\EasyPay.Core\obj\Debug\net8.0\EasyPay.Core.csproj.CoreCompileInputs.cache
+D:\Projects\EasyPay\src\EasyPay.Core\obj\Debug\net8.0\EasyPay.Core.sourcelink.json
+D:\Projects\EasyPay\src\EasyPay.Core\obj\Debug\net8.0\EasyPay.Core.dll
+D:\Projects\EasyPay\src\EasyPay.Core\obj\Debug\net8.0\refint\EasyPay.Core.dll
+D:\Projects\EasyPay\src\EasyPay.Core\obj\Debug\net8.0\EasyPay.Core.pdb
+D:\Projects\EasyPay\src\EasyPay.Core\obj\Debug\net8.0\ref\EasyPay.Core.dll

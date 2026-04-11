@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "RuPvmVCMuKj8ePfbahFDHBVs6yp28LtMWgqvT43EuX0=",
-  "Source": "EasyPay.Web",
-  "BasePath": "_content/EasyPay.Web",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"OTR5J7ItcxsI8bIbTGqGG/uAcI81KmktxUrq+kVQlDw=","Source":"EasyPay.Web","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

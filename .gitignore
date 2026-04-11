@@ -20,3 +20,6 @@ TgRobuxBot/.local/
 TgRobuxBot/bin/
 TgRobuxBot/obj/
 **/http-cache/
+/src/.vs
+/src/bin
+/src/obj

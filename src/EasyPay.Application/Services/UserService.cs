@@ -134,4 +134,18 @@ public class UserService(EPContext context)
             return false;
         }
     }
+
+    public async Task<User> GetActiveUserByUsernameAsync(string username)
+    {
+        var user = await context.Users
+            .FirstOrDefaultAsync(u => u.Username == username && u.IsDeleted == false);
+        if (user is not null)
+        {
+            return user;
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

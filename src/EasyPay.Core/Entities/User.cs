@@ -20,11 +20,6 @@ public class User
     
     public bool IsDeleted { get; set; } = false;
     
-    // Telegram Bot State
-    public long? TelegramId { get; set; }
-    public string BotState { get; set; } = "Idle";
-    public string? BotTempData { get; set; } // JSON string for session data
-    
     // Navigation properties
     public ICollection<Product> Products { get; set; } = new List<Product>();
     public ICollection<Order> Purchases { get; set; } = new List<Order>();

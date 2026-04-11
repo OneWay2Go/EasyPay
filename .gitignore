@@ -15,12 +15,12 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
-src/.vs
-src/EasyPay.Web/bin
-src/EasyPay.Web/obj
-src/EasyPay.Infrastructure/bin
-src/EasyPay.Infrastructure/obj
-src/EasyPay.Core/bin
-src/EasyPay.Core/obj
-src/EasyPay.Application/bin
-src/EasyPay.Application/obj
+/src/.vs
+/src/EasyPay.Web/bin
+/src/EasyPay.Web/obj
+/src/EasyPay.Infrastructure/bin
+/src/EasyPay.Infrastructure/obj
+/src/EasyPay.Core/bin
+/src/EasyPay.Core/obj
+/src/EasyPay.Application/bin
+/src/EasyPay.Application/obj

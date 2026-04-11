@@ -1,6 +1,6 @@
 using EasyPay.Application.Interfaces;
+using EasyPay.Application.OptionsSetup;
 using EasyPay.Application.Services;
-using EasyPay.Application.Services.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,11 +21,10 @@ public static class ServiceDI
         });
         
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(o => o.TokenValidationParameters = new()
-            {
-                ValidateIssuer = true,
-                ValidIssuer = ""
-            });
+            .AddJwtBearer();
+
+        services.ConfigureOptions<JwtOptionsSetup>();
+        services.ConfigureOptions<JwtBearerOptionsSetup>();
         
         return services;
     }

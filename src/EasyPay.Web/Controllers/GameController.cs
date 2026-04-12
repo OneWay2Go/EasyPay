@@ -1,6 +1,7 @@
 using EasyPay.Application.DTOs;
 using EasyPay.Application.DTOs.Game;
 using EasyPay.Application.Interfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

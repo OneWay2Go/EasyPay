@@ -11,6 +11,7 @@ namespace EasyPay.Web.Controllers;
 [Route("[controller]")]
 public class GameController(IGameService gameService) : ControllerBase
 {
+    [Authorize]
     [HttpGet("get-all")]
     public async Task<IActionResult> GetAll()
     {
